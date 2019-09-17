@@ -3,7 +3,7 @@ const doDistinctionsOfCountriesWithTheSameLanguage = false
 
 // put in here all the languages of your website
 // if you DON'T want to make distinctions of countries with the same language put the root language in this variable, such as, en or es or pt (instead of en-US or pt-BR or es-MX)
-const languagesOfWebsite = [ 'pt', 'en', 'fr' ]
+const languagesOfWebsite = [ 'pt', 'en' ]
 
 // default language
 const languageOfRootWebpage = languagesOfWebsite[0];
@@ -21,12 +21,14 @@ if ( (browserLang) && (! doDistinctionsOfCountriesWithTheSameLanguage) ) {
 const isBrowserLanguageSameLanguageAsRootWebpage = ( browserLang === languageOfRootWebpage )
 
 // is language being forced
-let urlParams = new URLSearchParams(window.location.search);
+let urlParams = new URLSearchParams(location.search);
 const automaticLanguageRedirectionStatus = urlParams.get('languageRedirection')
 
 const isPathnameTheDefaultLanguage = ( location.pathname === pathnamesOfAllLanguagesOfWebsite[0] )
 
 const actualPathname = isPathnameTheDefaultLanguage ? '/' : location.pathname
+
+const hashOfLocation = location.hash
 
 let doAutomaticLanguageRedirection
 switch(automaticLanguageRedirectionStatus) {
@@ -40,7 +42,7 @@ switch(automaticLanguageRedirectionStatus) {
   	doAutomaticLanguageRedirection = true
   	break;
   default:
-  	doAutomaticLanguageRedirection = (actualPathname === '/') ? true : false
+  	doAutomaticLanguageRedirection = (actualPathname === '/' && (! hashOfLocation)) ? true : false
 }
 
 
@@ -52,7 +54,7 @@ if (doAutomaticLanguageRedirection) {
 	if ( pathnamesOfAllLanguagesOfWebsite.find(str => str.startsWith(actualPathname)) ) {
 		urlParams.set('languageRedirection', "done")
 		const urlParamsString = urlParams.toString()
-		const targetHref = `${location.origin}${languageTargetPathname}?${urlParamsString}${location.hash}`
+		const targetHref = `${location.origin}${languageTargetPathname}?${urlParamsString}${hashOfLocation}`
 		location.replace(targetHref)
 	}
 }
