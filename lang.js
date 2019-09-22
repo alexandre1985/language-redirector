@@ -32,29 +32,33 @@ const hashOfLocation = location.hash
 
 let doAutomaticLanguageRedirection
 switch(automaticLanguageRedirectionStatus) {
-  case 'no':
-  case 'false':
-  case 'done':
-    doAutomaticLanguageRedirection = false
-    break;
-  case 'yes':
-  case 'true':
-  	doAutomaticLanguageRedirection = true
-  	break;
-  default:
-  	doAutomaticLanguageRedirection = (actualPathname === '/' && (! hashOfLocation)) ? true : false
+    case 'no':
+    case 'false':
+    case 'done':
+        doAutomaticLanguageRedirection = false
+        break;
+    case 'yes':
+    case 'true':
+        doAutomaticLanguageRedirection = true
+        break;
+    default:
+        doAutomaticLanguageRedirection = (actualPathname === '/' && (! hashOfLocation)) ? true : false
 }
 
 
 // this is an assumption that browserLang (pt or pt-PT, for example) corresponds to the pathname (/pt/ or /pt-PT/, following the example)
 const languageTargetPathname = (isBrowserLanguageSameLanguageAsRootWebpage) ? '/' : ( isPathnameTheDefaultLanguage ? '/' : `/${browserLang}/` )
 
+// if you are not on a language page (or locale page); dont do redirection
+if ( ! pathnamesOfAllLanguagesOfWebsite.find(str => str.startsWith(actualPathname)) ) {
+    doAutomaticLanguageRedirection = false
+}
+
+
+// maybe do the redirection ??
 if (doAutomaticLanguageRedirection) {
-	// if you are on a language page (or locale page)
-	if ( pathnamesOfAllLanguagesOfWebsite.find(str => str.startsWith(actualPathname)) ) {
-		urlParams.set('languageRedirection', "done")
-		const urlParamsString = urlParams.toString()
-		const targetHref = `${location.origin}${languageTargetPathname}?${urlParamsString}${hashOfLocation}`
-		location.replace(targetHref)
-	}
+    urlParams.set('languageRedirection', "done")
+    const urlParamsString = urlParams.toString()
+    const targetHref = `${location.origin}${languageTargetPathname}?${urlParamsString}${hashOfLocation}`
+    location.replace(targetHref)
 }
