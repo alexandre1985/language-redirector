@@ -66,4 +66,4 @@
         const targetHref = `${location.origin}${languageTargetPathname}?${urlParamsString}${hashOfLocation}`
         location.replace(targetHref)
     }
-})();
+}());
