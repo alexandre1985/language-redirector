@@ -37,7 +37,7 @@ Also, with this example, the variable `languagesOfWebsite` must be set as `const
 
 There is the use case when you want disable the language redirection. For example, when you are on a translated international language (for example, `www.something.com/jp`) of your website and want to code an anchor link tag to the root language of the website (for example, English in `www.something.com`).
 
-In this case you want to code the anchor link tag as `<a href="www.something.com?*languageRedirection=no*" ... >` (notice the addition of `?languageRedirection=no`).
+In this case you want to code the anchor link tag as `<a href="http://www.something.com?languageRedirection=no" ... >` (notice the addition of `?languageRedirection=no`).
 
 Why must you add this query string?
 
