@@ -1,3 +1,5 @@
+( this repository now lives at [https://gitlab.com/alexandre1985/language-redirector/](https://gitlab.com/alexandre1985/language-redirector/) )
+
 # Language Redirector
 
 Pure JavaScript for detecting browser language and make an *automatic language redirection* (all on the client side)
